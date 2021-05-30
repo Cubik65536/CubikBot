@@ -1,13 +1,16 @@
 package top.cubik65536.yuq;
 
-import com.IceCreamQAQ.Yu.loader.AppClassloader;
 import com.IceCreamQAQ.Yu.util.IO;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassWriter;
 import top.cubik65536.yuq.asm.MyClassLoader;
 import top.cubik65536.yuq.asm.YuQStarterAdapter;
 import top.cubik65536.yuq.utils.OkHttpUtils;
-import org.objectweb.asm.*;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Method;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -28,15 +31,14 @@ public class Start {
         File confFile = new File("conf");
         if (!confFile.exists()) confFile.mkdir();
         File yuqFile = new File("conf/YuQ.properties");
-        if (!yuqFile.exists()){
+        if (!yuqFile.exists()) {
             try {
-                byte[] bytes = OkHttpUtils.downloadBytes("https://cdn.jsdelivr.net/gh/CubikBitStudio/YuQ-Bot-Template@master/src/main/resources/conf/YuQ.properties");
+                byte[] bytes = OkHttpUtils.downloadBytes("https://cdn.jsdelivr.net/gh/CuBitStudio/CubikBot@master/src/main/resources/conf/YuQ.properties");
                 IO.writeFile(yuqFile, bytes);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        AppClassloader.registerTransformerList("com.IceCreamQAQ.Yu.web.WebClassTransformer");
         try {
             ClassReader cr = new ClassReader("com.icecreamqaq.yuq.YuQStarter");
             ClassWriter cw = new ClassWriter(0);

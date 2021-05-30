@@ -1,23 +1,16 @@
 package top.cubik65536.yuq.utils;
 
-import com.IceCreamQAQ.Yu.annotation.Action;
-import com.IceCreamQAQ.Yu.annotation.Path;
-import com.IceCreamQAQ.Yu.annotation.Synonym;
-import com.IceCreamQAQ.Yu.util.OkHttpWebImpl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.icecreamqaq.yuq.FunKt;
 import com.icecreamqaq.yuq.message.*;
-import com.icecreamqaq.yuq.mirai.MiraiBot;
 import com.icecreamqaq.yuq.mirai.message.ImageReceive;
-import top.cubik65536.yuq.entity.QQLoginEntity;
-import okhttp3.Cookie;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Method;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,13 +23,11 @@ public class BotUtils {
         // http://www.uc4.cn/
         try {
             if (!url.startsWith("http") && !url.startsWith("https")) url = "http://" + url;
-            Map<String, String> map = new HashMap<>();
-            map.put("i", "1");
-            map.put("url", url);
-            JSONObject jsonObject = OkHttpUtils.postJson("https://dwz.ng/api.php", map);
-            if (jsonObject.getInteger("code") == 1){
-                return jsonObject.getString("url");
-            }else return url;
+            JSONObject jsonObject = OkHttpUtils.postJson("https://links.iyou.eu.org/",
+                    OkHttpUtils.addJson("{\"url\":\"" + url + "\"}"));
+            if (jsonObject.getInteger("status") == 200) {
+                return "https://links.iyou.eu.org" + jsonObject.getString("key");
+            } else return url;
         } catch (Exception e) {
             return url;
         }
@@ -219,54 +210,32 @@ public class BotUtils {
         return list;
     }
 
-    public static List<String> menu(Class<?>...clazzArr){
-        List<String> list = new ArrayList<>();
-        for (Class<?> clazz : clazzArr) {
-            String first = "";
-            Path path = clazz.getAnnotation(Path.class);
-            if (path != null){
-                first = path.value() + " ";
-            }
-            Method[] methods = clazz.getMethods();
-            for (Method method: methods){
-                Action action = method.getAnnotation(Action.class);
-                if (action != null){
-                    list.add(first + action.value());
-                }
-                Synonym synonym = method.getAnnotation(Synonym.class);
-                if (synonym != null){
-                    String[] arr = synonym.value();
-                    for (String str: arr){
-                        list.add(first + str);
-                    }
-                }
-            }
-        }
-        return list;
-    }
-
-    public static List<String> allCommand(){
-        List<String> list = menu();
-        for (int i = 0; i < list.size(); i++){
-            String str = list.get(i);
-            String command = str.split(" ")[0];
-            if (command.contains("/")) command = str.split("/")[0];
-            list.set(i, command);
-        }
-        return list;
-    }
-
     public static String removeLastLine(StringBuilder sb){
         if ("\n".equals(sb.substring(sb.length() - 1, sb.length()))) return sb.deleteCharAt(sb.length() - 1).toString();
         else return sb.toString();
     }
 
-    public static Message toMessage(String str){
+    public static Message toMessage(String str) {
         return Message.Companion.toMessage(str);
     }
 
-    public static String firstString(Message message){
+    public static String firstString(Message message) {
         return Message.Companion.firstString(message);
+    }
+
+    public static String messageToString(Message message) {
+        StringBuilder sb = new StringBuilder();
+        for (MessageItem item : message.getBody()) {
+            if (item instanceof Text) {
+                sb.append(((Text) item).getText()).append(" ");
+            }
+            if (item instanceof XmlEx) {
+                String value = ((XmlEx) item).getValue();
+                String url = regex("url=\"http://", "\"", value);
+                if (url != null) sb.append(url);
+            }
+        }
+        return sb.toString().trim();
     }
 
 }

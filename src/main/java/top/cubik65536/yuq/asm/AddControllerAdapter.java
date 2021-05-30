@@ -14,7 +14,7 @@ public class AddControllerAdapter extends ClassVisitor {
         super(ASM5, classVisitor);
     }
 
-    public static byte[] asm(String className){
+    public static byte[] asm(String className) {
         try {
             ClassReader cr = new ClassReader(className);
             ClassWriter cw = new ClassWriter(cr, 0);
@@ -30,14 +30,14 @@ public class AddControllerAdapter extends ClassVisitor {
     @Override
     public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
         MethodVisitor mv = super.visitMethod(access, name, descriptor, signature, exceptions);
-        if (name.equals("load")){
+        if (name.equals("load")) {
             mv = new AddControllerMethodAdapter(mv);
         }
         return mv;
     }
 
     @SuppressWarnings("InnerClassMayBeStatic")
-    class AddControllerMethodAdapter extends MethodVisitor{
+    class AddControllerMethodAdapter extends MethodVisitor {
         private boolean status = false;
 
         public AddControllerMethodAdapter(MethodVisitor methodVisitor) {
@@ -47,7 +47,7 @@ public class AddControllerAdapter extends ClassVisitor {
         @Override
         public void visitMethodInsn(int opcode, String owner, String name, String descriptor, boolean isInterface) {
             super.visitMethodInsn(opcode, owner, name, descriptor, isInterface);
-            if (owner.equals("java/util/HashMap") && name.equals("<init>")){
+            if (owner.equals("java/util/HashMap") && name.equals("<init>")) {
                 status = true;
             }
         }
@@ -55,7 +55,7 @@ public class AddControllerAdapter extends ClassVisitor {
         @Override
         public void visitVarInsn(int opcode, int var) {
             super.visitVarInsn(opcode, var);
-            if (status){
+            if (status) {
                 super.visitVarInsn(ALOAD, 2);
                 super.visitVarInsn(ALOAD, 0);
                 super.visitMethodInsn(INVOKEVIRTUAL, "com/IceCreamQAQ/Yu/loader/AppLoader", "getAppClassloader",
