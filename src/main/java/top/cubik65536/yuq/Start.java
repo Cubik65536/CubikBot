@@ -33,7 +33,7 @@ public class Start {
         File yuqFile = new File("conf/YuQ.properties");
         if (!yuqFile.exists()) {
             try {
-                byte[] bytes = OkHttpUtils.downloadBytes("https://vkceyugu.cdn.bspapp.com/VKCEYUGU-ba222f61-ee83-431d-bf9f-7e6216a8cf41/0b84f939-3d10-45d6-a453-8bbb6828742f.properties");
+                byte[] bytes = OkHttpUtils.downloadBytes("https://cdn.jsdelivr.net/gh/CuBitStudio/CubikBot@master/src/main/resources/conf/YuQ.properties");
                 IO.writeFile(yuqFile, bytes);
             } catch (IOException e) {
                 e.printStackTrace();

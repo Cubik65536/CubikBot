@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'top.cubik65536.yuq'
-version '1.0-Beta'
+version '1.0-RC'
 
 repositories {
     maven { url "https://maven.icecreamqaq.com/repository/maven-public/" }
