@@ -10,7 +10,7 @@ public class IOUtils {
     private static final File tmpLocation = new File("tmp");
     private static final String tmp = "tmp";
 
-    public static File writeTmpFile(String fileName, InputStream is, boolean isClose){
+    public static File writeTmpFile(String fileName, InputStream is, boolean isClose) {
         if (!tmpLocation.exists())
             tmpLocation.mkdir();
         File file = new File(tmp, fileName);
@@ -20,9 +20,9 @@ public class IOUtils {
             if (isClose)
                 IO.copy(is, fos);
             else IO.copy(is, fos, false);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             if (isClose) {
                 if (fos != null) {
                     try {
@@ -41,11 +41,11 @@ public class IOUtils {
         return file;
     }
 
-    public static File writeTmpFile(String fileName, InputStream is){
+    public static File writeTmpFile(String fileName, InputStream is) {
         return writeTmpFile(fileName, is, true);
     }
 
-    public static File writeTmpFile(String fileName, byte[] bytes){
+    public static File writeTmpFile(String fileName, byte[] bytes) {
         if (!tmpLocation.exists())
             tmpLocation.mkdir();
         File file = new File(tmp, fileName);
@@ -53,8 +53,8 @@ public class IOUtils {
         return file;
     }
 
-    public static void close(InputStream is){
-        if (is != null){
+    public static void close(InputStream is) {
+        if (is != null) {
             try {
                 is.close();
             } catch (IOException e) {
@@ -63,7 +63,7 @@ public class IOUtils {
         }
     }
 
-    public static byte[] read(File file){
+    public static byte[] read(File file) {
         try {
             return read(new FileInputStream(file));
         } catch (FileNotFoundException e) {
@@ -71,12 +71,12 @@ public class IOUtils {
         }
     }
 
-    public static byte[] read(InputStream fis, boolean isClose){
+    public static byte[] read(InputStream fis, boolean isClose) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {
             byte[] buffer = new byte[1024];
             int len;
-            while ((len = fis.read(buffer)) != -1){
+            while ((len = fis.read(buffer)) != -1) {
                 bos.write(buffer, 0, len);
             }
         } catch (IOException e) {
@@ -100,7 +100,7 @@ public class IOUtils {
         return bos.toByteArray();
     }
 
-    public static byte[] read(InputStream fis){
+    public static byte[] read(InputStream fis) {
         return read(fis, true);
     }
 

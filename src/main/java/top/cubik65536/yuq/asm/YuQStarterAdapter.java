@@ -32,14 +32,18 @@ public class YuQStarterAdapter extends ClassVisitor {
 			String str = value.toString();
 			if (str.startsWith("感谢您使用 YuQ 进行开发")){
 				try {
-					String my = "    ___      ___      _   __      _   __      ___      ___    __  ___        / __      ___    __  ___ \n" +
-									"  //   ) ) //   ) ) // ) )  ) ) // ) )  ) ) ((   ) ) //   ) )  / /    ____  //   ) ) //   ) )  / /    \n" +
-									" //       //   / / // / /  / / // / /  / /   \\ \\    //___/ /  / /          //   / / //   / /  / /     \n" +
-									"((____   ((___/ / // / /  / / // / /  / / //   ) ) //        / /          ((___/ / ((___/ /  / /      \n";
-					value = "感谢您使用 YuQ 进行开发，在您使用中如果遇到任何问题，可以到 Github（ https://github.com/IceCream-Open/Rain 、 https://github.com/YuQWorks/YuQ ）提出 issue，您也可以添加 YuQ 的开发交流群\n" +
+					String my = "    //   ) )           //           //        //   ) )                 \n" +
+							"   //                 //__     ( ) //___     //___/ /   ___    __  ___ \n" +
+							"  //        //   / / //   ) ) / / //\\ \\     / __  (   //   ) )  / /    \n" +
+							" //        //   / / //   / / / / //  \\ \\   //    ) ) //   / /  / /     \n" +
+							"((____/ / ((___( ( ((___/ / / / //    \\ \\ //____/ / ((___/ /  / /      \n" +
+							"\n感谢您使用CubikBot，在您使用中如果遇到任何问题，可以到 Github（ https://github.com/CuBitStudio/CubikBot ）提出 issue，\n" +
+							"您也可以添加 Cubik交流群（Mjk4NTEzNDg3）进行交流。";
+					value = "感谢您使用 YuQ 进行开发，在您使用中如果遇到任何问题，可以到 Github（ https://github.com/IceCream-Open/Rain 、" +
+							" https://github.com/YuQWorks/YuQ ）提出 issue，您也可以添加 YuQ 的开发交流群\n" +
 							"（Njk2MTI5MTI4）（Base64解码网站：http://tools.bugscaner.com/base64/ ）进行交流。\n" +
-							my + "\n" +
-							"欢迎使用LittleSkin社区支持机器人！";
+							"\n" + my + "\n" +
+							"欢迎使用CubikBot！";
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
